@@ -7,8 +7,9 @@ var http            = require('http');
 
 
 /**
- * API call: http://<eureka-server-hostname>:port/eureka/v2/apps/appID
- * Http; POST
+ * Register application to Eureka Server
+ * @param options . An object containing inputs for registration requests.
+ * @param callback
  */
 exports.register = function(options,callback){
     var payload = {};
@@ -39,13 +40,9 @@ exports.register = function(options,callback){
     postRequest.end();
 };
 
-
 /**
- * API call: http://<eureka-server-hostname>:port/eureka/v2/apps/appID/instanceID.
- * This code currently has a bug which is causing socket hang up. Socket hang up is usually faced by client when it does not hear from the server.
- * The same request is sent via POSTMAN and server does not seem to be responding.
- * Probable issues may be: either EurekaServer1 is not reachable or
- * Http: PUT
+ * Send the heartbeat every 30 seconds to indicate the
+ * @param options. An object containing inputs for heartbeat request.
  */
 function heartbeat (options){
     setInterval(function(){
@@ -68,36 +65,4 @@ function heartbeat (options){
         heartbeatReq.end();
     }, 30000);
 }
-
-/**
- * API call: http://<eureka-server-hostname>:port/eureka/v2/apps/appID/instanceID
- */
-exports.deRegister = function(){
-}
-
-/* Fetch registered applications every 30 seconds and update the cache.
- * API call: http://<eureka-server-hostname>:port/eureka/v2/apps/
- */
-exports.fetchRegistry = function(){
-	app.get('/', function (request, response) {
-    });
-}
-
-
-/**
- * API call: http://<eureka-server-hostname>:port/eureka/v2/instances/instanceID
- */
-exports.getThisApp = function(){
-	app.get();
-}
-
-
-/**
- * API call: http://<eureka-server-hostname>:port/eureka/v2/apps/
- */
-exports.getAllApps = function(){
-	app.get();
-}
-
-
 
